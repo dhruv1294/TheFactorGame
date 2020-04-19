@@ -30,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Integer> factors = new ArrayList<>();
     ArrayList<Integer> answers = new ArrayList<>();
     ProgressBar progressBar;
-    Button button0;
-    Button button1;
-    Button button2;
-    Button button;
+    Button option1;
+    Button option2;
+    Button option3;
+    Button practiceFactors;
     Button playagain;
     TextView score;
     TextView timer;
@@ -54,12 +54,12 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Enter a Number!", Toast.LENGTH_SHORT).show();
         }
         else {
-            button.setVisibility(View.INVISIBLE);
+            practiceFactors.setVisibility(View.INVISIBLE);
 
             int number = Integer.parseInt(editText.getText().toString());
             if (number <= 2) {
                 Toast.makeText(this, "Enter number greater than 2", Toast.LENGTH_SHORT).show();
-                button.setVisibility(View.VISIBLE);
+                practiceFactors.setVisibility(View.VISIBLE);
             } else {
                 for (int i = 2; i < number; i++) {
                     if (number % i == 0) {
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (factors.size() == 0) {
                     Toast.makeText(this, "That's a prime number", Toast.LENGTH_SHORT).show();
-                    button.setVisibility(View.VISIBLE);
+                    practiceFactors.setVisibility(View.VISIBLE);
                 } else {
                     InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     mgr.hideSoftInputFromWindow(editText.getWindowToken(), 0);
@@ -89,13 +89,13 @@ public class MainActivity extends AppCompatActivity {
                             answers.add(wronganswer);
                         }
                     }
-                    button0.setText(Integer.toString(answers.get(0)));
-                    button1.setText(Integer.toString(answers.get(1)));
-                    button2.setText(Integer.toString(answers.get(2)));
+                    option1.setText(Integer.toString(answers.get(0)));
+                    option2.setText(Integer.toString(answers.get(1)));
+                    option3.setText(Integer.toString(answers.get(2)));
 
-                    button0.setVisibility(View.VISIBLE);
-                    button1.setVisibility(View.VISIBLE);
-                    button2.setVisibility(View.VISIBLE);
+                    option1.setVisibility(View.VISIBLE);
+                    option2.setVisibility(View.VISIBLE);
+                    option3.setVisibility(View.VISIBLE);
                     factors.clear();
                     answers.clear();
                     countDownTimer = new CountDownTimer(10100, 1000) {
@@ -108,10 +108,10 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onFinish() {
-                            button0.setVisibility(View.INVISIBLE);
-                            button1.setVisibility(View.INVISIBLE);
-                            button2.setVisibility(View.INVISIBLE);
-                            button.setVisibility(View.INVISIBLE);
+                            option1.setVisibility(View.INVISIBLE);
+                            option2.setVisibility(View.INVISIBLE);
+                            option3.setVisibility(View.INVISIBLE);
+                            practiceFactors.setVisibility(View.INVISIBLE);
                             editText.setVisibility(View.INVISIBLE);
 
                             updateMaxScore();
@@ -144,14 +144,14 @@ public class MainActivity extends AppCompatActivity {
     public void chooseAns(View view){
         countDownTimer.cancel();
         timer.setText("0:10");
-        button.setVisibility(View.VISIBLE);
+        practiceFactors.setVisibility(View.VISIBLE);
         progressBar.setProgress(100);
 
         if(Integer.parseInt(view.getTag().toString())==correctAnswerPosition){
             Toast.makeText(this, "Correct Answer!!", Toast.LENGTH_SHORT).show();
-            button0.setVisibility(View.INVISIBLE);
-            button1.setVisibility(View.INVISIBLE);
-            button2.setVisibility(View.INVISIBLE);
+            option1.setVisibility(View.INVISIBLE);
+            option2.setVisibility(View.INVISIBLE);
+            option3.setVisibility(View.INVISIBLE);
             editText.getText().clear();
             scoreresult++;
             score.setText("Score:\n"+Integer.toString(scoreresult));
@@ -185,9 +185,9 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             Toast.makeText(this, "Wrong!! Correct answer is " + Integer.toString(correctAnswer) , Toast.LENGTH_SHORT).show();
-            button0.setVisibility(View.INVISIBLE);
-            button1.setVisibility(View.INVISIBLE);
-            button2.setVisibility(View.INVISIBLE);
+            option1.setVisibility(View.INVISIBLE);
+            option2.setVisibility(View.INVISIBLE);
+            option3.setVisibility(View.INVISIBLE);
             editText.getText().clear();
             score.setText("Score:\n"+Integer.toString(scoreresult));
             constraintLayout.setBackgroundColor(Color.RED);
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
         timer.setVisibility(View.VISIBLE);
 
         editText.setVisibility(View.VISIBLE);
-        button.setVisibility(View.VISIBLE);
+        practiceFactors.setVisibility(View.VISIBLE);
         timer.setText("0:10");
         score.setText("Score:\n 0");
         scoreresult=0;
@@ -252,13 +252,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         editText = findViewById(R.id.editText);
-        button0=findViewById(R.id.button);
-        button1=findViewById(R.id.button2);
-        button2=findViewById(R.id.button3);
+        option1=findViewById(R.id.option1);
+        option2=findViewById(R.id.option2);
+        option3=findViewById(R.id.option3);
         score = findViewById(R.id.score);
         constraintLayout = findViewById(R.id.constraintLayout);
         timer = findViewById(R.id.timer);
-        button = findViewById(R.id.button5);
+        practiceFactors = findViewById(R.id.practiceFactorsButton);
         sharedPreferences = this.getSharedPreferences("com.example.thefactorgame", Context.MODE_PRIVATE);
         highScore = findViewById(R.id.highscore);
         playagain = findViewById(R.id.start);
@@ -266,6 +266,36 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         intro = findViewById(R.id.intro);
         progressBar.animate().rotation(270.0f);
+        playagain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                playAgain(v);
+            }
+        });
+        option1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseAns(v);
+            }
+        });
+        option2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseAns(v);
+            }
+        });
+        option3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseAns(v);
+            }
+        });
+        practiceFactors.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getAnswers(v);
+            }
+        });
         updateMaxScore();
 
 
