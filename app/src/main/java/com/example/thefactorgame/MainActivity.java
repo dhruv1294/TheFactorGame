@@ -49,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
     int correctFactor;
     int correctAnswer;
     public void getAnswers(View view){
-        if(editText.getText().toString().equals(""))
-        {
+        if(editText.getText().toString().equals("")) {
             Toast.makeText(this, "Enter a Number!", Toast.LENGTH_SHORT).show();
         }
         else {
@@ -92,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
                     option1.setText(Integer.toString(answers.get(0)));
                     option2.setText(Integer.toString(answers.get(1)));
                     option3.setText(Integer.toString(answers.get(2)));
-
                     option1.setVisibility(View.VISIBLE);
                     option2.setVisibility(View.VISIBLE);
                     option3.setVisibility(View.VISIBLE);
@@ -113,30 +111,24 @@ public class MainActivity extends AppCompatActivity {
                             option3.setVisibility(View.INVISIBLE);
                             practiceFactors.setVisibility(View.INVISIBLE);
                             editText.setVisibility(View.INVISIBLE);
-
                             updateMaxScore();
-
                             playagain.setText("Play Again");
                             playagain.setVisibility(View.VISIBLE);
                             highScore.setVisibility(View.VISIBLE);
                             progressBar.setProgress(0);
                             progressBar.setProgress(100);
                             timer.setText("0:10");
-
-
                         }
                     }.start();
                 }
             }
         }
-
-
     }
+
     public void updateMaxScore(){
         maxScore=scoreresult;
         if(maxScore>sharedPreferences.getInt("maxScore",0)){
             sharedPreferences.edit().putInt("maxScore",maxScore).apply();
-
         }
         highScore.setText("Highscore:\n"+Integer.toString(sharedPreferences.getInt("maxScore",0)));
     }
@@ -160,14 +152,12 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onTick(long millisUntilFinished) {
-
                 }
 
                 @Override
                 public void onFinish() {
-                    //constraintLayout.setBackgroundColor(Color.WHITE);
                     int colorFrom = Color.parseColor("#00ff00");
-                    int colorTo = getResources().getColor(android.R.color.background_light);
+                    int colorTo = Color.parseColor("#ffdde1");
                     ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
                     colorAnimation.setDuration(1000); // milliseconds
                     colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -195,15 +185,12 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onTick(long millisUntilFinished) {
-
-
                 }
 
                 @Override
                 public void onFinish() {
-                    //constraintLayout.setBackgroundColor(Color.WHITE);
                     int colorFrom = Color.RED;
-                    int colorTo = getResources().getColor(android.R.color.background_light);
+                    int colorTo = Color.parseColor("#ffdde1");
                     ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
                     colorAnimation.setDuration(1500); // milliseconds
                     colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -215,7 +202,6 @@ public class MainActivity extends AppCompatActivity {
 
                     });
                     colorAnimation.start();
-
                 }
             }.start();
             Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
@@ -236,10 +222,8 @@ public class MainActivity extends AppCompatActivity {
         intro.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
         editText.getText().clear();
-
         score.setVisibility(View.VISIBLE);
         timer.setVisibility(View.VISIBLE);
-
         editText.setVisibility(View.VISIBLE);
         practiceFactors.setVisibility(View.VISIBLE);
         timer.setText("0:10");
@@ -296,6 +280,7 @@ public class MainActivity extends AppCompatActivity {
                 getAnswers(v);
             }
         });
+        constraintLayout.setBackgroundColor(Color.parseColor("#ffdde1"));
         updateMaxScore();
 
 
